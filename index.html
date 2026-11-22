@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows SSH setup</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; line-height: 1.55; color: #1f2328; }
+  h1 { font-size: 1.6rem; } h2 { font-size: 1.15rem; margin-top: 2rem; }
+  .cmd { position: relative; background: #0d1117; color: #e6edf3; border-radius: 8px; padding: 14px 16px; padding-right: 80px; font-family: ui-monospace, Consolas, monospace; font-size: 0.92rem; white-space: pre-wrap; word-break: break-all; }
+  .cmd button { position: absolute; top: 10px; right: 10px; background: #238636; color: #fff; border: 0; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-size: 0.85rem; }
+  .note { background: #fff8c5; border: 1px solid #d4a72c66; border-radius: 8px; padding: 10px 14px; }
+  ol li { margin-bottom: 6px; }
+  a { color: #0969da; }
+</style>
+</head>
+<body>
+<h1>Enable SSH access on this Windows PC</h1>
+
+<h2>1. Open PowerShell as Administrator</h2>
+<ol>
+  <li>Right-click the <b>Start</b> button.</li>
+  <li>Click <b>Terminal (Admin)</b> or <b>Windows PowerShell (Admin)</b>.</li>
+  <li>Click <b>Yes</b> on the permission prompt.</li>
+</ol>
+
+<h2>2. Paste this command and press Enter</h2>
+<div class="cmd"><button onclick="copy(this)">Copy</button><span>irm https://cheracpp.github.io/win-ssh-setup/setup.ps1 | iex</span></div>
+<p>It installs and starts the Windows OpenSSH server, opens port 22 in the firewall, and authorizes the SSH key at
+<a href="https://github.com/Cheracpp.keys">github.com/Cheracpp.keys</a>. You can read the full script first:
+<a href="setup.ps1">setup.ps1</a>.</p>
+
+<h2>3. Send back the green "Connect" line</h2>
+<p>At the end the script prints something like <code>ssh username@10.x.x.x</code>. That line is all that's needed.</p>
+
+<div class="note"><b>If the command fails to download</b> (network blocks it), open <a href="setup.ps1">setup.ps1</a>,
+copy all of it, paste it into the same Administrator PowerShell window, and press Enter.</div>
+
+<h2>To remove access later</h2>
+<div class="cmd"><button onclick="copy(this)">Copy</button><span>irm https://cheracpp.github.io/win-ssh-setup/undo.ps1 | iex</span></div>
+
+<script>
+function copy(btn) {
+  navigator.clipboard.writeText(btn.nextElementSibling.textContent.trim());
+  btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1500);
+}
+</script>
+</body>
+</html>
